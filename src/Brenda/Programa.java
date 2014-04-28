@@ -1,6 +1,7 @@
 package Brenda;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,8 +12,18 @@ public class Programa
 
 	public Programa()
 	{
-		Arquivo.LerArquivo(alunos, cursos);
+		File f1 = new File("alunos.ser");
+		File f2 = new File("cursos.ser");
+		if(f1.exists() && f2.exists())
+		{
+			alunos = Arquivo.LerArquivoAlunos();
+			cursos = Arquivo.LerArquivoCursos();
+		}
+		else
+			Arquivo.GravarArquivo(alunos, cursos);
 	}
+	
+	
 	
 	public void removeAluno(Aluno a)
 	{
@@ -34,6 +45,14 @@ public class Programa
 	
 	public void adicionaCurso(Curso c)
 	{
+		for(Curso c1 : cursos)
+		{
+			if(c1.getNome() == c.getNome())
+			{
+				System.out.println("Curso com o mesmo Nome! Inválido");
+				return;
+			}
+		}
 		cursos.add(c);
 		Arquivo.GravarArquivo(alunos, cursos);
 	}
@@ -57,9 +76,38 @@ public class Programa
 		return cursos.get(i);
 	}
 	
+	public Curso getCursoByName(String name)
+	{
+		
+		for(Curso c1 : cursos)
+		{
+			if(c1.getNome() == name)
+			{
+				return c1;
+			}
+		}
+		return null;
+	}
+	
 	public String [] getCursesNames()
 	{
-		String []
+		String[] vetor = new String[cursos.size()];
+		for(int i = 0, k = 0; i < cursos.size(); ++i)
+		{
+			if(cursos.get(i).quantidadeInscritos() < 30)
+			{
+				vetor[k] = cursos.get(i).getNome();
+				k++;
+			}
+			
+		}
+		
+		return vetor;
+	}
+	
+	public void GravarDados()
+	{
+		Arquivo.GravarArquivo(alunos, cursos);
 	}
 }
 
@@ -70,12 +118,10 @@ class programaTest
 		Programa p = new Programa();
 		
 		p.adicionaCurso(new Curso("Jardinagem","dsad","horatal"));
+		p.adicionaCurso(new Curso("Vadiagem","dsad","horatal"));
+		p.adicionaCurso(new Curso("Culinaria","dsad","horatal"));
 		
-		p.adicionaAluno(new Aluno("Geremias",p.getCursos().get(0),null,null));
-		p.adicionaAluno(new Aluno("José",p.getCursos().get(0),null,null));
-		p.adicionaAluno(new Aluno("Carlos",p.getCursos().get(0),null,null));
-		p.adicionaAluno(new Aluno("Zezé",p.getCursos().get(0),null,null));
-		p.adicionaAluno(new Aluno("Aragão",p.getCursos().get(0),null,null));
+		
 		
 		
 		for(Aluno al: p.getAlunos())

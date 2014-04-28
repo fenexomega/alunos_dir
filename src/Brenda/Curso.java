@@ -75,6 +75,11 @@ public class Curso implements Serializable
 		this.horario = horario;
 	}
 
+	public Curso(String nome)
+	{
+		this.nome = nome;
+	}
+
 	public String getProfessor()
 	{
 		return professor;

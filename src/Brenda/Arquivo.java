@@ -14,10 +14,15 @@ public class Arquivo
 	{	
 		try
 		{
-			FileOutputStream f_out = new FileOutputStream("dados.ser");
+			FileOutputStream f_out = new FileOutputStream("cursos.ser");
 			ObjectOutputStream o_out = new ObjectOutputStream(f_out);
-			o_out.writeObject(alunos);
 			o_out.writeObject(cursos);
+			o_out.close();
+			f_out.close();
+			
+			f_out = new FileOutputStream("alunos.ser");
+			 o_out = new ObjectOutputStream(f_out);
+			o_out.writeObject(alunos);
 			o_out.close();
 			f_out.close();
 
@@ -28,24 +33,49 @@ public class Arquivo
 		}	
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static void LerArquivo(ArrayList<Aluno> alunos, ArrayList<Curso> cursos)
+	public static ArrayList<Curso> LerArquivoCursos()
 	{
+		ArrayList<Curso> cursos = null;
 		try
 		{
-			FileInputStream f_In = new FileInputStream("dados.ser");
+			FileInputStream f_In = new FileInputStream("cursos.ser");
 			ObjectInputStream o_In = new ObjectInputStream(f_In);
-			alunos = (ArrayList<Aluno>) o_In.readObject();
 			cursos = (ArrayList<Curso>) o_In.readObject();
 			o_In.close();
 			f_In.close();
+			return cursos;
 
 		} catch (IOException | ClassNotFoundException e)
 		{
 			// TODO Auto-generated catch block
 			System.out.println("Erro");
 			e.printStackTrace();
-		}	
+		}
+		return cursos;	
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Aluno> LerArquivoAlunos()
+	{
+		ArrayList<Aluno> alunos = null;
+		try
+		{
+			FileInputStream f_In = new FileInputStream("alunos.ser");
+			ObjectInputStream o_In = new ObjectInputStream(f_In);
+			alunos = (ArrayList<Aluno>) o_In.readObject();
+			o_In.close();
+			f_In.close();
+			System.out.println(alunos.size());
+			return alunos;
+
+		} catch (IOException | ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			System.out.println("Erro");
+			e.printStackTrace();
+		}
+		return alunos;
 	}
 	
 }
@@ -56,14 +86,14 @@ class ArquivoTest
 	{
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 		ArrayList<Curso> cursos = new ArrayList<Curso>();
-		Arquivo a = new Arquivo();
-		
-		alunos.add(new Aluno("José"));
-		alunos.add(new Aluno("Geremias"));
-		alunos.add(new Aluno("Jonas"));
-		alunos.add(new Aluno("Aragão"));
 
-		cursos.add(new Curso("Culinária","Professor","14:30"));
+		alunos = Arquivo.LerArquivoAlunos();
+		cursos = Arquivo.LerArquivoCursos();
+				
+		
+	
+		System.out.println(cursos.size());
+
 		
 		alunos.get(0).adicionarCurso(cursos.get(0));
 		alunos.get(1).adicionarCurso(cursos.get(0));
@@ -71,13 +101,14 @@ class ArquivoTest
 		alunos.get(3).adicionarCurso(cursos.get(0));
 
 		
-		a.GravarArquivo(alunos, cursos);
 		
+		Arquivo.GravarArquivo(alunos, cursos);
 		
-		a.LerArquivo(alunos, cursos);
 		
 		for(Aluno al: cursos.get(0).getAlunos())
 			System.out.println(al.getNome());
 		
 	}
 }
+
+

@@ -12,7 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import Brenda.Programa;
 
-public class Aluno
+public class AlunoGUI
 {
 
 	public JFrame frame;
@@ -26,7 +26,7 @@ public class Aluno
 	 * Create the application.
 	 */
 
-	public Aluno(Programa programa)
+	public AlunoGUI(Programa programa)
 	{
 		this.programa = programa;
 		initialize();
@@ -54,6 +54,7 @@ public class Aluno
 		frame.getContentPane().add(lblNome);
 		
 		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(programa.getCursesNames()));
 		comboBox.setBounds(101, 101, 294, 24);
 		frame.getContentPane().add(comboBox);
 		
@@ -66,6 +67,7 @@ public class Aluno
 		frame.getContentPane().add(lblCurso_1);
 		
 		comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(programa.getCursesNames()));
 		comboBox_1.setBounds(101, 137, 294, 24);
 		frame.getContentPane().add(comboBox_1);
 		
@@ -74,6 +76,7 @@ public class Aluno
 		frame.getContentPane().add(lblCurso_2);
 		
 		comboBox_2 = new JComboBox();
+		comboBox_2.setModel(new DefaultComboBoxModel(programa.getCursesNames()));
 		comboBox_2.setBounds(101, 178, 294, 24);
 		frame.getContentPane().add(comboBox_2);
 		
@@ -84,11 +87,18 @@ public class Aluno
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				programa.adicionaAluno(new Brenda.Aluno(txtDsad.getName(),
-						programa.getCursoByIndex(comboBox.getItemCount()), 
-						programa.getCursoByIndex(comboBox_1.getItemCount()), 
-						programa.getCursoByIndex(comboBox_2.getItemCount())
-						));				
+				programa.adicionaAluno(new Brenda.Aluno(txtDsad.getText().toString(),
+						programa.getCursoByIndex(comboBox.getSelectedIndex()), 
+						programa.getCursoByIndex(comboBox_1.getSelectedIndex()), 
+						programa.getCursoByIndex(comboBox_2.getSelectedIndex())
+						));
+				
+				txtDsad.setText("");
+				comboBox.setSelectedIndex(0);
+				comboBox_1.setSelectedIndex(0);
+				comboBox_2.setSelectedIndex(0);
+				frame.dispose();
+				
 			}
 		});
 		btnCadastrar.setBounds(184, 232, 117, 25);
@@ -107,5 +117,13 @@ public class Aluno
 		});
 		btnCancelar.setBounds(319, 232, 117, 25);
 		frame.getContentPane().add(btnCancelar);
+	}
+	
+	public void Update()
+	{
+		comboBox.setModel(new DefaultComboBoxModel(programa.getCursesNames()));
+		comboBox_1.setModel(new DefaultComboBoxModel(programa.getCursesNames()));
+		comboBox_2.setModel(new DefaultComboBoxModel(programa.getCursesNames()));
+
 	}
 }
