@@ -1,23 +1,24 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.InputEvent;
+import Brenda.Programa;
 
 public class TesteGUI {
 
 	private JFrame frame;
 	private Aluno alunoWindow;
-	
+	private Programa programa;
 	/**
 	 * Launch the application.
 	 */
@@ -45,7 +46,8 @@ public class TesteGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		alunoWindow = new Aluno();
+		programa = new Programa();
+		alunoWindow = new Aluno(programa);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

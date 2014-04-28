@@ -47,6 +47,20 @@ public class Programa
 		return cursos;
 	}
 	
+	public Aluno getAlunoByIndex(int i)
+	{
+		return alunos.get(i);
+	}
+	
+	public Curso getCursoByIndex(int i)
+	{
+		return cursos.get(i);
+	}
+	
+	public String [] getCursesNames()
+	{
+		String []
+	}
 }
 
 class programaTest

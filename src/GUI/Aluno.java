@@ -10,19 +10,27 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 
+import Brenda.Programa;
+
 public class Aluno
 {
 
 	public JFrame frame;
 	private JTextField txtDsad;
-
-
+	private Programa programa;
+	private JComboBox comboBox;
+	private JComboBox comboBox_1;
+	private JComboBox comboBox_2;
+	
 	/**
 	 * Create the application.
 	 */
-	public Aluno()
+
+	public Aluno(Programa programa)
 	{
+		this.programa = programa;
 		initialize();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -45,7 +53,7 @@ public class Aluno
 		lblNome.setBounds(33, 48, 70, 15);
 		frame.getContentPane().add(lblNome);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setBounds(101, 101, 294, 24);
 		frame.getContentPane().add(comboBox);
 		
@@ -57,7 +65,7 @@ public class Aluno
 		lblCurso_1.setBounds(33, 137, 70, 15);
 		frame.getContentPane().add(lblCurso_1);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(101, 137, 294, 24);
 		frame.getContentPane().add(comboBox_1);
 		
@@ -65,18 +73,30 @@ public class Aluno
 		lblCurso_2.setBounds(33, 178, 70, 15);
 		frame.getContentPane().add(lblCurso_2);
 		
-		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2 = new JComboBox();
 		comboBox_2.setBounds(101, 178, 294, 24);
 		frame.getContentPane().add(comboBox_2);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener()
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				programa.adicionaAluno(new Brenda.Aluno(txtDsad.getName(),
+						programa.getCursoByIndex(comboBox.getItemCount()), 
+						programa.getCursoByIndex(comboBox_1.getItemCount()), 
+						programa.getCursoByIndex(comboBox_2.getItemCount())
+						));				
+			}
+		});
 		btnCadastrar.setBounds(184, 232, 117, 25);
 		frame.getContentPane().add(btnCadastrar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener()
 		{
-			
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
