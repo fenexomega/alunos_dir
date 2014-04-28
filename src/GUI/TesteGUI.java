@@ -16,7 +16,8 @@ import java.awt.event.InputEvent;
 public class TesteGUI {
 
 	private JFrame frame;
-
+	private Aluno alunoWindow;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,10 +45,12 @@ public class TesteGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		alunoWindow = new Aluno();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("Brenda");
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 448, 21);
@@ -59,13 +62,14 @@ public class TesteGUI {
 		JMenuItem mntmAluno = new JMenuItem("Aluno");
 		mntmAluno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		mnNewMenu.add(mntmAluno);
-		mntmAluno.addActionListener(new ActionListener() {
+		mntmAluno.addActionListener(new ActionListener() 
+		{
 			
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
 				// TODO Auto-generated method stub
-				System.out.println("O botão foi pressionado");
-				
+				alunoWindow.frame.setVisible(true);
 			}
 		});
 		
