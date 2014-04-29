@@ -13,20 +13,23 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import Brenda.Programa;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.border.BevelBorder;
 
 public class GUIPrincipal {
 
 	private JFrame frame;
 	private AlunoGUI alunoWindow;
 	private CursoGUI cursoWindow;
+	private TabelaCursosGUI tabelaCursoWindow;
 	public Programa programa;
 	private JTable table;
+	private String[][] tabela;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -44,11 +47,39 @@ public class GUIPrincipal {
 		});
 	}
 
+	
+	
 	/**
 	 * Create the application.
 	 */
 	public GUIPrincipal() {
 		initialize();
+	}
+	
+	public void updateTabela()
+	{
+		tabela = programa.getTabelaCursos();
+		table.setModel(new DefaultTableModel(
+				tabela,
+				new String[] {
+					"Nome Curso", "Integrantes"
+				}
+			) {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+				/**
+				 * 
+				 */
+				Class[] columnTypes = new Class[] {
+					String.class, Integer.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			});
+		
 	}
 
 	/**
@@ -58,14 +89,16 @@ public class GUIPrincipal {
 		programa = new Programa();
 		alunoWindow = new AlunoGUI(programa);
 		cursoWindow = new CursoGUI(programa);
+		tabelaCursoWindow = new TabelaCursosGUI(programa);
+		tabela = programa.getTabelaCursos();
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 519, 342);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Brenda");
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 448, 21);
+		menuBar.setBounds(0, 0, 517, 21);
 		frame.getContentPane().add(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Adicionar");
@@ -101,6 +134,20 @@ public class GUIPrincipal {
 		});
 		mnNewMenu.add(mntmCurso);
 		
+		JMenu mnVisualizar = new JMenu("Visualizar");
+		menuBar.add(mnVisualizar);
+		
+		JMenuItem mntmCursos = new JMenuItem("Cursos...");
+		mnVisualizar.add(mntmCursos);
+		mntmCursos.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				tabelaCursoWindow.frmTabelaDeCursos.setVisible(true);
+			}
+		});
+		
 		JMenu mnExportar = new JMenu("Exportar");
 		menuBar.add(mnExportar);
 		
@@ -111,17 +158,25 @@ public class GUIPrincipal {
 		mntmParaPdf.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		mnExportar.add(mntmParaPdf);
 		
+		JMenu mnRemover = new JMenu("Remover");
+		menuBar.add(mnRemover);
+		
+		JMenuItem mntmAluno_1 = new JMenuItem("Aluno...");
+		mnRemover.add(mntmAluno_1);
+		
+		JMenuItem mntmCurso_1 = new JMenuItem("Curso...");
+		mnRemover.add(mntmCurso_1);
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(48, 35, 356, 207);
+		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		scrollPane.setBounds(48, 35, 441, 227);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Curso tal", 30},{"Curso tal", 30}
-			},
+			tabela,
 			new String[] {
 				"Nome Curso", "Integrantes"
 			}
@@ -130,6 +185,9 @@ public class GUIPrincipal {
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
+			/**
+			 * 
+			 */
 			Class[] columnTypes = new Class[] {
 				String.class, Integer.class
 			};
@@ -137,6 +195,15 @@ public class GUIPrincipal {
 				return columnTypes[columnIndex];
 			}
 		});
+		
+		JButton btnAtualizar = new JButton("Atualizar ");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTabela();
+			}
+		});
+		btnAtualizar.setBounds(388, 274, 117, 25);
+		frame.getContentPane().add(btnAtualizar);
 		table.getColumnModel().getColumn(0).setPreferredWidth(128);
 		table.getColumnModel().getColumn(1).setPreferredWidth(83);
 	}

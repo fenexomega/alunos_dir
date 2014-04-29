@@ -2,7 +2,7 @@ package Brenda;
 
 import java.util.Comparator;
 
-public class CustomComparator implements Comparator<Aluno>
+public class AlunoComparator implements Comparator<Aluno>
 {
 
 	@Override

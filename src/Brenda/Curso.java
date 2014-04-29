@@ -19,12 +19,12 @@ public class Curso implements Serializable
 	
 	public boolean adicionarAluno(Aluno a)
 	{
-		if(alunos.size() >= 30)
+		if(alunos.size() >= 50)
 			return false;
 		
 		alunos.add(a);
 		System.out.println("Aluno adicionado com sucesso!");
-		Collections.sort(alunos, new CustomComparator());
+		Collections.sort(alunos, new AlunoComparator());
 		return true;
 	}
 	

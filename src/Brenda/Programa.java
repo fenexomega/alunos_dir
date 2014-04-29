@@ -4,6 +4,7 @@ package Brenda;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class Programa
 {
@@ -38,7 +39,7 @@ public class Programa
 	public void adicionaAluno(Aluno a)
 	{
 		alunos.add(a);
-		Collections.sort(alunos, new CustomComparator());
+		Collections.sort(alunos, new AlunoComparator());
 		Arquivo.GravarArquivo(alunos, cursos);
 
 	}
@@ -53,8 +54,10 @@ public class Programa
 				return;
 			}
 		}
+		c.setNome(c.getNome().toUpperCase());
 		cursos.add(c);
 		Arquivo.GravarArquivo(alunos, cursos);
+		organizarCursos();
 	}
 	
 	public ArrayList<Aluno> getAlunos()
@@ -94,7 +97,7 @@ public class Programa
 		String[] vetor = new String[cursos.size()];
 		for(int i = 0, k = 0; i < cursos.size(); ++i)
 		{
-			if(cursos.get(i).quantidadeInscritos() < 30)
+			if(cursos.get(i).quantidadeInscritos() < 50)
 			{
 				vetor[k] = cursos.get(i).getNome();
 				k++;
@@ -105,9 +108,41 @@ public class Programa
 		return vetor;
 	}
 	
+	
+	
 	public void GravarDados()
 	{
 		Arquivo.GravarArquivo(alunos, cursos);
+	}
+	
+	public String[][] getTabelaCursos()
+	{
+		String[][] objetos = new String[cursos.size()][2];
+		for(int i = 0; i < cursos.size(); ++i)
+		{
+			objetos[i][0] =  cursos.get(i).getNome();
+			objetos[i][1] =  Integer.toString(cursos.get(i).quantidadeInscritos());
+		}
+		return objetos;
+	}
+	
+	public String[][] getTabelaAlunos(Curso c)
+	{
+		ArrayList<Aluno> alunos = c.getAlunos();
+		String[][] objetos = new String[alunos.size()][2];
+		for(int i = 0; i < alunos.size(); ++i)
+		{
+			objetos[i][0] =  alunos.get(i).getNome();
+			objetos[i][1] =  null;
+		}
+		return objetos;
+	}
+	
+	private void organizarCursos()
+	{
+		for(Curso c : cursos)
+			c.setNome(c.getNome().toUpperCase());
+		Collections.sort(cursos, new CursoComparator());
 	}
 }
 
