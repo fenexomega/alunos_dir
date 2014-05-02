@@ -10,8 +10,9 @@ import javax.swing.JTextField;
 
 import Brenda.Programa;
 import Brenda.Curso;
+import java.awt.Window.Type;
 
-public class CursoGUI
+public class GUICurso
 {
 
 	public JFrame frame;
@@ -25,7 +26,7 @@ public class CursoGUI
 	/**
 	 * Create the application.
 	 */
-	public CursoGUI(Programa programa)
+	public GUICurso(Programa programa)
 	{
 		this.programa = programa;
 		initialize();
@@ -38,7 +39,7 @@ public class CursoGUI
 	{
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNomeDoCurso = new JLabel("Nome do Curso");

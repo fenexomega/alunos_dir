@@ -28,13 +28,19 @@ public class Curso implements Serializable
 		return true;
 	}
 	
-	public boolean removerAluno(Aluno a)
+	public void removerAluno(Aluno a)
 	{
-		if(!alunos.remove(a))
-			return false;
 		
-		System.out.println("Aluno removido com sucesso!");
-		return true;
+		for(Aluno az: alunos)
+		{
+			if(az.getNome().equals(a.getNome()))
+			{
+				alunos.remove(az);
+				break;
+			}
+		}
+
+		System.out.println(a.getNome() + " Excluído com sucesso");
 	}
 	
 	public void apagarRegistros()

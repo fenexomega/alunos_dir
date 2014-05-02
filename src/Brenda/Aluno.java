@@ -32,7 +32,7 @@ public class Aluno implements Serializable
 	{
 		if(cursos.size() >= 3)
 			return false;
-		if(c.quantidadeInscritos() >= 30)
+		if(c.quantidadeInscritos() >= 50)
 			return false;
 		
 		cursos.add(c);

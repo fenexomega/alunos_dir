@@ -12,7 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 
 import Brenda.Programa;
 
-public class AlunoGUI
+public class GUIAluno
 {
 
 	public JFrame frame;
@@ -26,11 +26,10 @@ public class AlunoGUI
 	 * Create the application.
 	 */
 
-	public AlunoGUI(Programa programa)
+	public GUIAluno(Programa programa)
 	{
 		this.programa = programa;
 		initialize();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -41,7 +40,7 @@ public class AlunoGUI
 		frame = new JFrame();
 		frame.setTitle("Adicionar Aluno");
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		txtDsad = new JTextField();

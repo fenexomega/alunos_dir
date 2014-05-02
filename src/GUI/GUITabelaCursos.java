@@ -8,24 +8,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Brenda.Arquivo;
 import Brenda.Programa;
 
-import javax.swing.JToggleButton;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
-import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Window.Type;
 
-public class TabelaCursosGUI
+public class GUITabelaCursos
 {
 
 	public JFrame frmTabelaDeCursos;
@@ -37,12 +33,13 @@ public class TabelaCursosGUI
 	/**
 	 * Create the application.
 	 */
-	public TabelaCursosGUI(Programa programa)
+	public GUITabelaCursos(Programa programa)
 	{
 		this.programa = programa;
 		initialize();
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -62,6 +59,16 @@ public class TabelaCursosGUI
 			{
 				// TODO Auto-generated method stub
 				comboBox.setModel(new DefaultComboBoxModel(programa.getCursesNames()));
+				alunos = programa.getTabelaAlunos(programa.getCursoByIndex(comboBox.getSelectedIndex()));
+				table.setModel(new DefaultTableModel(
+						alunos,
+						new String[] {
+							"#", "ALUNO"
+						}
+					));
+				table.getColumnModel().getColumn(0).setPreferredWidth(20);
+				table.getColumnModel().getColumn(0).setMinWidth(20);
+				table.getColumnModel().getColumn(0).setMaxWidth(20);
 
 			}
 			
@@ -96,9 +103,12 @@ public class TabelaCursosGUI
 				table.setModel(new DefaultTableModel(
 						alunos,
 						new String[] {
-							"ALUNO"
+							"#", "ALUNO"
 						}
 					));
+				table.getColumnModel().getColumn(0).setPreferredWidth(20);
+				table.getColumnModel().getColumn(0).setMinWidth(20);
+				table.getColumnModel().getColumn(0).setMaxWidth(20);
 				
 			}
 		});
@@ -110,11 +120,15 @@ public class TabelaCursosGUI
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			alunos,
+			new Object[][] {
+			},
 			new String[] {
-				"ALUNO"
+				"#", "ALUNO"
 			}
 		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(0).setMinWidth(20);
+		table.getColumnModel().getColumn(0).setMaxWidth(20);
 		scrollPane.setViewportView(table);
 				
 	}
